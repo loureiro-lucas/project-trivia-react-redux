@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
 import { saveGravatarUrlImage, saveUserName } from '../redux/actions';
 import { getGravatarImage } from '../services';
 
@@ -25,26 +29,24 @@ class Header extends React.Component {
   }
 
   render() {
-    const { urlImage, userName, score } = this.props;
+    const { urlImage, userName, score, styleClass } = this.props;
     return (
-      <div>
-        <img
-          src={ urlImage }
-          alt="profile-img"
-          data-testid="header-profile-picture"
-        />
-        <h3 data-testid="header-player-name">
-          Jogador:
-          {' '}
-          { userName }
-        </h3>
-        <h3>
-          Ponto:
-        </h3>
-        <h3 data-testid="header-score">
-          { score }
-        </h3>
-      </div>
+      <AppBar position="static">
+        <Toolbar>
+          <Avatar
+            src={ urlImage }
+            alt="profile-img"
+          />
+          <Typography variant="h6" className={ styleClass }>
+            { userName }
+          </Typography>
+          <Typography>
+            { score }
+            {' '}
+            pontos!
+          </Typography>
+        </Toolbar>
+      </AppBar>
     );
   }
 }
@@ -66,6 +68,7 @@ Header.propTypes = {
   userName: PropTypes.string.isRequired,
   urlGravatarImage: PropTypes.func.isRequired,
   saveName: PropTypes.func.isRequired,
+  styleClass: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

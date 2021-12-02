@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateScoreAction } from '../redux/actions';
-import Header from '../components/Header';
 import { fetchQuestionsTrivia, fetchQuestionsWithPreferences } from '../services';
 import './Game.css';
 
@@ -178,7 +177,6 @@ class Game extends Component {
     } = this.state;
     return (
       <div>
-        <Header />
         { questions.length > 0
         && (
           <div>
