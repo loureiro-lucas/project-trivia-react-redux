@@ -3,8 +3,17 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 300px;
+  width: 400px;
   height: 200px;
   margin: 20vh auto;
   text-align: center;
+}
+
+#open-ranking-button {
+  width: 170px;
+}
+
+#open-ranking-button svg,
+#play-again-btn svg {
+  margin-left: 10px;
 }

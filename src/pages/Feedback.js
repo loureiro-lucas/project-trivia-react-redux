@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormatListNumberedRoundedIcon from '@material-ui/icons/FormatListNumberedRounded';
+import ReplayRoundedIcon from '@material-ui/icons/ReplayRounded';
 import './Feedback.css';
 
 class Feedback extends React.Component {
@@ -63,14 +65,18 @@ class Feedback extends React.Component {
           <Button
             color="primary"
             onClick={ () => history.push('/ranking') }
+            id="open-ranking-button"
           >
             Ver Ranking
+            <FormatListNumberedRoundedIcon />
           </Button>
           <Button
             color="primary"
             onClick={ () => history.push('/') }
+            id="play-again-btn"
           >
             Jogar Novamente
+            <ReplayRoundedIcon />
           </Button>
         </ButtonGroup>
       </div>

@@ -28,3 +28,7 @@
 #play-again-button {
   margin-top: 20px;
 }
+
+#play-again-button svg {
+  margin-left: 10px;
+}

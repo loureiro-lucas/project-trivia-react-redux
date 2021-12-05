@@ -5,6 +5,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import NavigateNextRoundedIcon from '@material-ui/icons/NavigateNextRounded';
 import { updateScoreAction } from '../redux/actions';
 import { fetchQuestionsTrivia, fetchQuestionsWithPreferences } from '../services';
 import './Game.css';
@@ -127,6 +128,7 @@ class Game extends Component {
         onClick={ this.handleClickNext }
       >
         Próxima pergunta
+        <NavigateNextRoundedIcon />
       </Button>
     );
   }

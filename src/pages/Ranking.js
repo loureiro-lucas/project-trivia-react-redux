@@ -4,6 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
+import ReplayRoundedIcon from '@material-ui/icons/ReplayRounded';
 import PropTypes from 'prop-types';
 import './Ranking.css';
 
@@ -75,6 +76,7 @@ class Ranking extends React.Component {
             id="play-again-button"
           >
             Jogar Novamente
+            <ReplayRoundedIcon />
           </Button>
         </List>
       </div>
