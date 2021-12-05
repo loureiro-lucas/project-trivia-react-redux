@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { updateScoreAction } from '../redux/actions';
 import { fetchQuestionsTrivia, fetchQuestionsWithPreferences } from '../services';
 import './Game.css';
@@ -8,19 +12,17 @@ import './Game.css';
 class Game extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       questions: [],
       index: 0,
       randomAnswers: [],
-      correctClass: 'correct',
-      wrongClass: 'wrong',
+      correctId: 'correct',
+      wrongId: 'wrong',
       isAnswersDisabled: false,
       counter: 30,
       isButtonShow: false,
       intervalId: '',
     };
-
     this.getQuestions = this.getQuestions.bind(this);
     this.setQuestionsinState = this.setQuestionsinState.bind(this);
     this.createRandomArray = this.createRandomArray.bind(this);
@@ -28,6 +30,7 @@ class Game extends Component {
     this.setAnswerAsWrong = this.setAnswerAsWrong.bind(this);
     this.setTimeLimitToAnswer = this.setTimeLimitToAnswer.bind(this);
     this.handleClickNext = this.handleClickNext.bind(this);
+    this.renderCounter = this.renderCounter.bind(this);
   }
 
   componentDidMount() {
@@ -59,10 +62,7 @@ class Game extends Component {
   }
 
   setAnswerAsWrong() {
-    this.setState({
-      isAnswersDisabled: true,
-      isButtonShow: true,
-    });
+    this.setState({ isAnswersDisabled: true, isButtonShow: true });
   }
 
   setTimeLimitToAnswer() {
@@ -77,9 +77,7 @@ class Game extends Component {
         }
       });
     }, SECOND);
-    this.setState({
-      intervalId,
-    });
+    this.setState({ intervalId });
   }
 
   createRandomArray(correctAnswer, incorrectAnswers) {
@@ -97,17 +95,13 @@ class Game extends Component {
     this.setState({ randomAnswers: randomArray });
   }
 
-  handleClickAnswer({ target }) {
-    const points = {
-      hard: 3,
-      medium: 2,
-      easy: 1,
-    };
+  handleClickAnswer({ currentTarget }) {
+    const points = { hard: 3, medium: 2, easy: 1 };
     const { questions, index, counter } = this.state;
     const { difficulty } = questions[index];
-    const { className } = target;
+    const { id } = currentTarget;
     const { player } = JSON.parse(localStorage.getItem('state'));
-    if (className === 'correct') {
+    if (id === 'correct') {
       const BASE_SCORE = 10;
       const currentScore = player.score + BASE_SCORE + (counter * points[difficulty]);
       const currentAssertions = player.assertions + 1;
@@ -120,22 +114,21 @@ class Game extends Component {
     }
 
     this.setState({
-      correctClass: 'correct answered',
-      wrongClass: 'wrong answered',
+      correctId: 'correct-answered',
+      wrongId: 'wrong-answered',
       isButtonShow: true,
     });
   }
 
   returnNextButton() {
     return (
-      <button
-        type="button"
+      <Button
+        variant="contained"
+        color="primary"
         onClick={ this.handleClickNext }
-        data-testid="btn-next"
       >
-        Próxima
-
-      </button>
+        Próxima pergunta
+      </Button>
     );
   }
 
@@ -148,8 +141,8 @@ class Game extends Component {
     } else {
       this.setState({
         index: index + 1,
-        correctClass: 'correct',
-        wrongClass: 'wrong',
+        correctId: 'correct',
+        wrongId: 'wrong',
         counter: 30,
         isButtonShow: false,
         isAnswersDisabled: false,
@@ -164,49 +157,67 @@ class Game extends Component {
     clearInterval(intervalId);
   }
 
+  renderCounter() {
+    const { counter } = this.state;
+    const SECONDS_TO_PERCENTAGE = 3.33;
+    return (
+      <div className="counter-container">
+        <LinearProgress
+          variant="determinate"
+          color="secondary"
+          value={ counter * SECONDS_TO_PERCENTAGE }
+        />
+        <Typography
+          variant="h5"
+          color="secondary"
+        >
+          {counter}
+        </Typography>
+      </div>
+    );
+  }
+
   render() {
     const {
       questions,
       index,
       randomAnswers,
-      correctClass,
-      wrongClass,
+      correctId,
+      wrongId,
       isAnswersDisabled,
-      counter,
       isButtonShow,
     } = this.state;
     return (
-      <div>
+      <div className="game-page-container">
         { questions.length > 0
         && (
-          <div>
-            <div>
-              { counter }
-            </div>
-            <h4 data-testid="question-category">{ questions[index].category }</h4>
-            <p data-testid="question-text">
-              { questions[index].question.replace(/&quot;/g, '"') }
-            </p>
-            <div>
-              {randomAnswers.map((answer) => (
-                <button
-                  key={ answer.text }
-                  data-testid={
-                    answer.type === 'correct'
-                      ? 'correct-answer'
-                      : `wrong-answer ${answer.index}`
-                  }
-                  className={ answer.type === 'correct' ? correctClass : wrongClass }
-                  type="button"
-                  onClick={ this.handleClickAnswer }
-                  disabled={ isAnswersDisabled }
-                >
-                  { answer.text.replace(/&quot;/g, '"') }
-                </button>
-              ))}
+          <>
+            <div className="questions-container">
+              { this.renderCounter() }
+              <Typography variant="overline">
+                Categoria:
+                { ` ${questions[index].category}` }
+              </Typography>
+              <Typography variant="body1">
+                { questions[index].question.replace(/&quot;/g, '"') }
+              </Typography>
+              <div className="buttons-container">
+                <ButtonGroup variant="contained" size="small">
+                  {randomAnswers.map((answer) => (
+                    <Button
+                      key={ answer.text }
+                      id={ answer.type === 'correct' ? correctId : wrongId }
+                      onClick={ this.handleClickAnswer }
+                      disabled={ isAnswersDisabled }
+                    >
+                      { answer.text.replace(/&quot;/g, '"') }
+                    </Button>
+                  ))}
+                </ButtonGroup>
+              </div>
             </div>
             { isButtonShow && this.returnNextButton() }
-          </div>
+          </>
         )}
       </div>
     );
