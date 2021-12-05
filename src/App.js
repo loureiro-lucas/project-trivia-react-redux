@@ -18,8 +18,8 @@ export default function App() {
         <Route path="/settings" component={ Settings } />
         <Layout>
           <Route path="/game" component={ Game } />
-          <Route path="/feedback" component={ (props) => <Feedback { ...props } /> } />
-          <Route path="/ranking" component={ Ranking } />
+          <Route path="/feedback" render={ (props) => <Feedback { ...props } /> } />
+          <Route path="/ranking" render={ (props) => <Ranking { ...props } /> } />
         </Layout>
       </Switch>
     </>

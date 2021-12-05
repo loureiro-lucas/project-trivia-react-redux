@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
-import { Button, ButtonGroup } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import './Feedback.css';
 
 class Feedback extends React.Component {
