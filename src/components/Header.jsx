@@ -68,7 +68,7 @@ Header.propTypes = {
   userName: PropTypes.string.isRequired,
   urlGravatarImage: PropTypes.func.isRequired,
   saveName: PropTypes.func.isRequired,
-  styleClass: PropTypes.objectOf(PropTypes.string).isRequired,
+  styleClass: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

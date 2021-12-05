@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  height: 350px;
+  /* height: 350px; */
 }
 
 .questions-container {
@@ -11,14 +11,23 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 250px;
-  width: 100%;
+  height: 100px;
+  width: 90%;
   margin-bottom: 30px;
+  margin: 20vh 0 10vh;
 }
 
 .counter-container{
   text-align: center;
   width: 100%;
+}
+
+#question-category {
+  margin-top: 20px;
+}
+
+#counter-text {
+  margin-top: 20px;
 }
 
 #correct-answered {

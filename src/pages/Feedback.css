@@ -1,0 +1,10 @@
+.feedback-inside-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  height: 200px;
+  margin: 20vh auto;
+  text-align: center;
+}

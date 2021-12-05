@@ -112,7 +112,6 @@ class Game extends Component {
       const { updateScore } = this.props;
       updateScore(currentScore);
     }
-
     this.setState({
       correctId: 'correct-answered',
       wrongId: 'wrong-answered',
@@ -170,6 +169,7 @@ class Game extends Component {
         <Typography
           variant="h5"
           color="secondary"
+          id="counter-text"
         >
           {counter}
         </Typography>
@@ -192,14 +192,15 @@ class Game extends Component {
         { questions.length > 0
         && (
           <>
+            { this.renderCounter() }
+            <Typography variant="overline" id="question-category">
+              Categoria:
+              { ` ${questions[index].category}` }
+            </Typography>
             <div className="questions-container">
-              { this.renderCounter() }
-              <Typography variant="overline">
-                Categoria:
-                { ` ${questions[index].category}` }
-              </Typography>
               <Typography variant="body1">
-                { questions[index].question.replace(/&quot;/g, '"') }
+                { questions[index].question
+                  .replace(/&quot;/g, '"').replace(/&#039;/g, '\'') }
               </Typography>
               <div className="buttons-container">
                 <ButtonGroup variant="contained" size="small">
