@@ -1,8 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import FormatListNumberedRoundedIcon from '@material-ui/icons/FormatListNumberedRounded';
+import ReplayRoundedIcon from '@material-ui/icons/ReplayRounded';
+import './Feedback.css';
 
 class Feedback extends React.Component {
   constructor(props) {
@@ -39,47 +43,51 @@ class Feedback extends React.Component {
 
   returnFeedback(phrase) {
     const { score, assertions } = this.state;
+    const { history } = this.props;
     return (
-      <div>
-        <Header />
-        <p data-testid="feedback-text">{ phrase }</p>
-        <span>
-          Você acertou
-          <p data-testid="feedback-total-question">{ assertions }</p>
-          questões
-        </span>
-        <span>
-          Um total de
-          <p data-testid="feedback-total-score">{ score }</p>
-          pontos
-        </span>
-        <Link to="/ranking">
-          <button
-            type="button"
-            data-testid="btn-ranking"
+      <div className="feedback-inside-container">
+        <Typography
+          variant="h6"
+        >
+          { phrase }
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          className="score-feedback"
+        >
+          { `Você acertou ${assertions} ${assertions === 1 ? 'questão' : 'questões'},` }
+          <br />
+          { ` um total de ${score} ${score === 1 ? 'ponto' : 'pontos'}!` }
+        </Typography>
+        <ButtonGroup
+          variant="contained"
+        >
+          <Button
+            color="primary"
+            onClick={ () => history.push('/ranking') }
+            id="open-ranking-button"
           >
             Ver Ranking
-          </button>
-        </Link>
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-play-again"
+            <FormatListNumberedRoundedIcon />
+          </Button>
+          <Button
+            color="primary"
+            onClick={ () => history.push('/') }
+            id="play-again-btn"
           >
             Jogar Novamente
-          </button>
-        </Link>
+            <ReplayRoundedIcon />
+          </Button>
+        </ButtonGroup>
       </div>
     );
   }
 
   render() {
-    const { userName } = this.props;
-    console.log(userName);
     const MIN_QUESTIONS = 3;
     const { assertions } = this.state;
     return (
-      <div>
+      <div className="feedback-container">
         { assertions < MIN_QUESTIONS
           ? (
             this.returnFeedback('Podia ser melhor...')
@@ -102,6 +110,12 @@ Feedback.propTypes = {
   userName: PropTypes.string.isRequired,
   urlImage: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+    PropTypes.object,
+  ])).isRequired,
 };
 
 export default connect(mapStateToProps)(Feedback);

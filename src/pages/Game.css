@@ -1,7 +1,39 @@
-.correct.answered {
-  border: 3px solid rgb(6, 240, 15);
+.game-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  /* height: 350px; */
 }
 
-.wrong.answered {
-  border: 3px solid red;
+.questions-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  width: 90%;
+  margin-bottom: 30px;
+  margin: 20vh 0 10vh;
+}
+
+.counter-container{
+  text-align: center;
+  width: 100%;
+}
+
+#question-category {
+  margin-top: 20px;
+}
+
+#counter-text {
+  margin-top: 20px;
+}
+
+#correct-answered {
+border: 2px solid #178be9;
+}
+
+#wrong-answered {
+  border: 2px solid #F44336;
 }

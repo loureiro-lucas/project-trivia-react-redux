@@ -1,0 +1,34 @@
+#ranking-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.ranking-person {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+}
+
+.ranking-person-name {
+  flex-grow: 1;
+  padding-left: 30px;
+}
+
+.ranking-title {
+  text-align: center;
+  padding: 20px 0;
+}
+
+#play-again-button {
+  margin-top: 20px;
+}
+
+#play-again-button svg {
+  margin-left: 10px;
+}

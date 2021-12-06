@@ -1,5 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
+import ReplayRoundedIcon from '@material-ui/icons/ReplayRounded';
+import PropTypes from 'prop-types';
+import './Ranking.css';
 
 class Ranking extends React.Component {
   constructor(props) {
@@ -30,29 +37,60 @@ class Ranking extends React.Component {
 
   render() {
     const { ranking } = this.state;
+    const { history } = this.props;
     return (
       <div>
-        <h1 data-testid="ranking-title">
+        <Typography variant="h3" component="h1" className="ranking-title">
           Ranking
-        </h1>
-        { ranking.map((person, index) => (
-          <div key={ index }>
-            <img src={ person.picture } alt="ranking person" />
-            <h3 data-testid={ `player-name-${index}` }>{ person.name }</h3>
-            <h3 data-testid={ `player-score-${index}` }>{ person.score }</h3>
-          </div>
-        )) }
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="btn-go-home"
+        </Typography>
+        <List id="ranking-container">
+          { ranking.map((person, index) => (
+            <ListItem
+              key={ index }
+              className="ranking-person"
+              divider
+            >
+              <Avatar
+                src={ person.picture }
+                alt="ranking person"
+              />
+              <Typography variant="h6" component="p" className="ranking-person-name">
+                { person.name }
+              </Typography>
+              <Typography
+                variant="h6"
+                component="p"
+                color="primary"
+              >
+                {person.score}
+              </Typography>
+              <Typography variant="body">
+                { person.score === 1 ? 'ponto' : 'pontos' }
+              </Typography>
+            </ListItem>
+          )) }
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={ () => history.push('/') }
+            id="play-again-button"
           >
-            Home
-          </button>
-        </Link>
+            Jogar Novamente
+            <ReplayRoundedIcon />
+          </Button>
+        </List>
       </div>
     );
   }
 }
+
+Ranking.propTypes = {
+  history: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+    PropTypes.object,
+  ])).isRequired,
+};
 
 export default Ranking;
